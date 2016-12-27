@@ -1,0 +1,55 @@
+﻿<Controls:MetroWindow x:Class="MathLogicWpf.StepsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:local="clr-namespace:MathLogicWpf"
+        mc:Ignorable="d"
+        Height="300" Width="438.596"
+        GlowBrush="{DynamicResource AccentColorBrush}" ResizeMode="CanMinimize" Title="Пошаговый режим">
+    <Grid>
+        <Controls:MetroAnimatedTabControl>
+            <TabItem Header="Алфавит">
+                <TabItem.Content>
+                    <Grid>
+                        <Label Content="Текущий алфавит:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <ListBox x:Name="alphabetListBox" HorizontalAlignment="Left" Height="191" Margin="10,31,0,0" VerticalAlignment="Top" Width="129" BorderThickness="1" BorderBrush="#33000000"/>
+                        <Label Content="Добавление:" HorizontalAlignment="Left" Margin="178,0,0,0" VerticalAlignment="Top"/>
+                        <Label HorizontalAlignment="Left" Margin="178,26,0,0" VerticalAlignment="Top">
+                            <TextBlock Text="Введите символ/последовательность символов/промежуток, который надо добавить" TextWrapping="Wrap"/>
+                        </Label>
+                        <TextBox x:Name="addAlphabetTextBox" HorizontalAlignment="Left" Height="23" Margin="178,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245" TextChanged="alphabetTextBox_TextChanged"/>
+                        <Button Content="Добавить" HorizontalAlignment="Left" Margin="178,120,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" IsEnabled="{Binding Path=CanAddAlphabet, UpdateSourceTrigger=PropertyChanged}" Click="addAlphabetButton_Click"/>
+                        <Button Content="Изменить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="258,120,0,0" IsEnabled="{Binding Path=IsAlphabetSelected, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="changeAlphabetButton_Click"/>
+                        <Button Content="Удалить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="338,120,0,0" IsEnabled="{Binding Path=IsAlphabetSelected, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="deleteAlphabetButton_Click"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Замены">
+                <TabItem.Content>
+                    <Grid>
+                        <Label Content="Текущий список замен:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <ListBox x:Name="permutsListBox" HorizontalAlignment="Left" Height="191" Margin="10,31,0,0" VerticalAlignment="Top" Width="129" BorderThickness="1" BorderBrush="#33000000"/>
+                        <Label Content="Добавление:" HorizontalAlignment="Left" Margin="178,0,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Замена:" HorizontalAlignment="Left" Margin="178,26,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="beforePermutsTextBox" HorizontalAlignment="Left" Height="23" Margin="178,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="245" TextChanged="permutsTextBox_TextChanged"/>
+                        <Label Content="На:" HorizontalAlignment="Left" Margin="178,88,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="afterPermutsTextBox" HorizontalAlignment="Left" Height="23" Margin="178,119,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="245" TextChanged="permutsTextBox_TextChanged"/>
+                        <CheckBox Content="Заключительная формула" HorizontalAlignment="Left" Margin="178,150,0,0" VerticalAlignment="Top"/>
+                        <Button Content="Добавить" HorizontalAlignment="Left" Margin="178,173,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal"  IsEnabled="{Binding Path=CanAddPermuts, UpdateSourceTrigger=PropertyChanged}" Click="addPermutsButton_Click"/>
+                        <Button Content="Изменить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="258,173,0,0" IsEnabled="{Binding Path=IsPermutsSelected, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="changePermutsButton_Click"/>
+                        <Button Content="Удалить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="338,173,0,0" IsEnabled="{Binding Path=IsPermutsSelected, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="deletePermutsButton_Click"/>
+                    </Grid>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Текст">
+                <Grid>
+                    <Label Content="Текст:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="inputTextBox" HorizontalAlignment="Left" Height="179" Margin="57,11,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="366" TextChanged="inputTextBox_TextChanged"/>
+                    <Button Content="Начать" HorizontalAlignment="Left" Margin="179,195,0,0" VerticalAlignment="Top" Width="75"  Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" IsEnabled="{Binding Path=CanStart, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+        </Controls:MetroAnimatedTabControl>
+    </Grid>
+</Controls:MetroWindow>

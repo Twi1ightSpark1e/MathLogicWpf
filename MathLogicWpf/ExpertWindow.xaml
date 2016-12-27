@@ -1,0 +1,34 @@
+﻿<Controls:MetroWindow x:Class="MathLogicWpf.ExpertWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathLogicWpf"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="Экспертный режим" Height="609.649" Width="436.842"
+        GlowBrush="{DynamicResource AccentColorBrush}" ResizeMode="CanMinimize"
+        Closed="MetroWindow_Closed" Closing="MetroWindow_Closing" WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow" ShowCloseButton="False">
+    <Grid>
+        <Label Content="Алфавит" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,11,0,0"/>
+        <ListBox Name="alphabetListBox" ItemsSource="{Binding Path=alphabetList, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="115" VerticalAlignment="Top" Width="150" Margin="10,41,0,0" BorderBrush="#33000000" BorderThickness="1" MouseDoubleClick="alphabetListBox_MouseDoubleClick"/>
+        <Button Name="addAlphabetButton" Content="Добавить" Margin="43,168,0,0" Style="{StaticResource AccentedSquareButtonStyle}" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="84" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="addAlphabetButton_Click"/>
+        <Button Name="deleteAlphabetButton" Content="Удалить" IsEnabled="{Binding Path=IsAlphabetSelected}" Margin="43,202,0,0" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Width="84" Height="30" VerticalAlignment="Top" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="deleteAlphabetButton_Click"/>
+        <Label Content="Замены" HorizontalAlignment="Left" Margin="321,11,0,0" VerticalAlignment="Top"/>
+        <ListBox Name="permutsListBox" HorizontalAlignment="Left" Height="115" Margin="271,41,0,0" VerticalAlignment="Top" Width="150" BorderBrush="#33000000" BorderThickness="1" MouseDoubleClick="permutsListBox_MouseDoubleClick"/>
+        <Button Name="addPermutsButton" Content="Добавить" Margin="303,168,0,0" Style="{StaticResource AccentedSquareButtonStyle}" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="85" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="addPermutsButton_Click"/>
+        <Button Name="deletePermutsButton" Content="Удалить" IsEnabled="{Binding Path=IsPermutsSelected}" Margin="303,202,0,0" Style="{StaticResource AccentedSquareButtonStyle}" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="85" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="deletePermutsButton_Click"/>
+        <Label Content="Текст" HorizontalAlignment="Left" Margin="10,237,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="inputTextBox" HorizontalAlignment="Left" Height="129" Margin="52,237,0,0" TextChanged="inputTextBox_TextChanged" TextWrapping="Wrap" VerticalAlignment="Top" Width="369"/>
+        <Button x:Name="startButton" Content="Начать" IsEnabled="{Binding Path=CanStart}" HorizontalAlignment="Left" Margin="185,371,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" Click="startButton_Click"/>
+        <DataGrid Name="stepsDataGrid" HorizontalAlignment="Left" Margin="10,404,0,10" Width="411" BorderThickness="1" BorderBrush="#33000000" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Step}" CanUserResize="False" ClipboardContentBinding="{x:Null}" Header="Шаг" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding Before}" ClipboardContentBinding="{x:Null}" Header="Было" Width="170" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding After}" ClipboardContentBinding="{x:Null}" Header="Стало" Width="170" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Name="backButton" Content="Вернуться" HorizontalAlignment="Left" Margin="185,10,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" Controls:ControlsHelper.ContentCharacterCasing="Normal" BorderBrush="#00000000" Click="backButton_Click"/>
+
+    </Grid>
+</Controls:MetroWindow>
