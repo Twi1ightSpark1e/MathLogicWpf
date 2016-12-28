@@ -7,10 +7,10 @@
         xmlns:local="clr-namespace:MathLogicWpf"
         mc:Ignorable="d"
         Height="300" Width="438.596"
-        GlowBrush="{DynamicResource AccentColorBrush}" ResizeMode="CanMinimize" Title="Пошаговый режим">
+        GlowBrush="{DynamicResource AccentColorBrush}" ResizeMode="CanMinimize" Title="Пошаговый режим" WindowStartupLocation="CenterOwner">
     <Grid>
         <Controls:MetroAnimatedTabControl>
-            <TabItem Header="Алфавит">
+            <TabItem x:Name="alphabetTabItem" Header="Алфавит">
                 <TabItem.Content>
                     <Grid>
                         <Label Content="Текущий алфавит:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -26,7 +26,7 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Header="Замены">
+            <TabItem x:Name="permutsTabItem" Header="Замены">
                 <TabItem.Content>
                     <Grid>
                         <Label Content="Текущий список замен:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -43,11 +43,11 @@
                     </Grid>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Header="Текст">
+            <TabItem x:Name="textTabItem" Header="Текст">
                 <Grid>
                     <Label Content="Текст:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="inputTextBox" HorizontalAlignment="Left" Height="179" Margin="57,11,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="366" TextChanged="inputTextBox_TextChanged"/>
-                    <Button Content="Начать" HorizontalAlignment="Left" Margin="179,195,0,0" VerticalAlignment="Top" Width="75"  Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" IsEnabled="{Binding Path=CanStart, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="inputTextBox" HorizontalAlignment="Left" Height="179" Margin="57,11,0,0" TextWrapping="Wrap" Text="{Binding Path=Text, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="366" TextChanged="inputTextBox_TextChanged"/>
+                    <Button x:Name="startButton" Click="startButton_Click" Content="Начать" HorizontalAlignment="Left" Margin="179,195,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" BorderBrush="#00000000" Controls:ControlsHelper.ContentCharacterCasing="Normal" IsEnabled="{Binding Path=CanStart, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
             </TabItem>
         </Controls:MetroAnimatedTabControl>

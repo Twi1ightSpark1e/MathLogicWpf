@@ -19,6 +19,8 @@ namespace MathLogicWpf
 		private static List<Triple<string, string, bool>> _permuts = new List<Triple<string, string, bool>>();
 		public static List<Triple<string, string, bool>> Permuts => _permuts;
 		public static List<string> PermutsListBox => (from x in _permuts
-													  select x.Key + " -> " + x.Value).ToList();
+													  select string.Format("{0} ->{1} {2}", x.Key, (x.Final ? "." : string.Empty), x.Value)).ToList();
+
+		public static string Text;
 	}
 }

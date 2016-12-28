@@ -29,6 +29,22 @@ namespace MathLogicWpf
 		public bool IsPermutsSelected => permutsListBox.SelectedIndex != -1;
 		public bool CanStart => inputTextBox.Text != string.Empty;
 
+		public string Text
+		{
+			get
+			{
+				return DataClass.Text;
+			}
+			set
+			{
+				DataClass.Text = value;
+				if (null != this.PropertyChanged)
+				{
+					PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+				}
+			}
+		}
+
 		private static BindingList<DataGridRow> stepsList;
 		public static BindingList<DataGridRow> StepsList => stepsList;
 		private static BindingList<string> permutsList;

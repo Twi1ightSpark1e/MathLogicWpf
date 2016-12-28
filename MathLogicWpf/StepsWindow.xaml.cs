@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,22 @@ namespace MathLogicWpf
 		public bool CanAddPermuts => (beforePermutsTextBox.Text != string.Empty) || (afterPermutsTextBox.Text != string.Empty);
 		public bool CanStart => inputTextBox.Text != string.Empty;
 
+		public string Text
+		{
+			get
+			{
+				return DataClass.Text;
+			}
+			set
+			{
+				DataClass.Text = value;
+				if (null != this.PropertyChanged)
+				{
+					PropertyChanged(this, new PropertyChangedEventArgs("Text"));
+				}
+			}
+		}
+
 		private static BindingList<string> permutsList;
 		private static BindingList<string> alphabetList;
 
@@ -36,6 +53,7 @@ namespace MathLogicWpf
 
 		public StepsWindow()
 		{
+			Owner = MainWindow.LastInstance;
 			InitializeComponent();
 			permutsList = new BindingList<string>(PermutsListBox);
 			alphabetList = new BindingList<string>(Alphabet);
@@ -95,6 +113,38 @@ namespace MathLogicWpf
 		private void deletePermutsButton_Click(object sender, RoutedEventArgs e)
 		{
 
+		}
+
+		private void startButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (!DirtyWork.CheckByAlphabet(this, Alphabet, Permuts, inputTextBox.Text))
+				return;
+			alphabetTabItem.IsEnabled = permutsTabItem.IsEnabled = textTabItem.IsEnabled = false;
+			startButton.Content = "Стоп";
+			startButton.Click -= startButton_Click;
+			startButton.Click += stopButton_Click;
+			InputText = inputTextBox.Text;
+			new Thread(DoWork).Start();
+		}
+
+		private void stopButton_Click(object sender, RoutedEventArgs e)
+		{
+			DirtyWork.Stop = true;
+			startButton.Content = "Начать";
+			startButton.Click -= stopButton_Click;
+			startButton.Click += startButton_Click;
+		}
+
+		private void DoWork()
+		{
+			string result = DirtyWork.DoWork(this, Permuts, DirtyWork.Mode.Simple);
+			//stepsList = new BindingList<DataGridRow>(DataClass.Steps);
+			this.Invoke(() =>
+			{
+				DirtyWork.ShowCustomMessageDialog(this, "Готово!", $"Результат: {result}");
+				alphabetTabItem.IsEnabled = permutsTabItem.IsEnabled = textTabItem.IsEnabled = true;
+				stopButton_Click(this, new RoutedEventArgs());
+			});
 		}
 	}
 }
