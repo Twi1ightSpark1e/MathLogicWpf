@@ -26,7 +26,7 @@ namespace MathLogicWpf
 	{
 		public bool IsAlphabetSelected => alphabetListBox.SelectedIndex != -1;
 		public bool IsPermutsSelected => permutsListBox.SelectedIndex != -1;
-		public bool CanAddAlphabet => addAlphabetTextBox.Text != string.Empty;
+		public bool CanAddAlphabet => alphabetTextBox.Text != string.Empty;
 		public bool CanAddPermuts => (beforePermutsTextBox.Text != string.Empty) || (afterPermutsTextBox.Text != string.Empty);
 		public bool CanStart => inputTextBox.Text != string.Empty;
 
@@ -85,34 +85,85 @@ namespace MathLogicWpf
 			PropertyChanged(this, new PropertyChangedEventArgs("CanStart"));
 		}
 
+		private void AlphabetAddChange(Action successAction)
+		{
+			string result = alphabetTextBox.Text;
+			if (result.Contains(".."))
+			{
+				try
+				{
+					DirtyWork.CharRange(result[0], result[3]);
+				}
+				catch
+				{
+					DirtyWork.ShowCustomMessageDialog(this, "Ошибка!", "Выбрано неправильное множество символов!");
+					return;
+				}
+			}
+			successAction.Invoke();
+			alphabetTextBox.Text = string.Empty;
+		}
+
+		private void PermutsAddChange(Action<string, string, bool> successAction)
+		{
+			string before = beforePermutsTextBox.Text ?? string.Empty;
+			string after = afterPermutsTextBox.Text ?? string.Empty;
+			bool final = finalCheckBox.IsChecked ?? false;
+			if (Permuts.Any((x) => x.Key == after))
+			{
+				DirtyWork.ShowCustomMessageDialog(this, "Ошибка!", "Замена с такого значения уже имеется!");
+				return;
+			}
+			successAction.Invoke(before, after, final);
+			beforePermutsTextBox.Text = string.Empty;
+			afterPermutsTextBox.Text = string.Empty;
+			finalCheckBox.IsChecked = false;
+		}
+
 		private void addAlphabetButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			AlphabetAddChange(() => { alphabetList.Add(alphabetTextBox.Text); });
 		}
 
 		private void changeAlphabetButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			AlphabetAddChange(() => { alphabetList[alphabetListBox.SelectedIndex] = alphabetTextBox.Text; });
 		}
 
 		private void deleteAlphabetButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			alphabetList.RemoveAt(alphabetListBox.SelectedIndex);
+			if (alphabetList.Count != 0)
+				alphabetListBox.SelectedIndex = 0;
 		}
 
 		private void addPermutsButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			PermutsAddChange((before, after, final) =>
+				{
+					//Since permutsList is constructed from new collection (made by linq) we must add new permutation here too
+					Permuts.Add(new Triple<string, string, bool>(before, after, final));
+					permutsList.Add(string.Format("{0} ->{1} {2}", before, final ? "." : string.Empty, after));
+				});
 		}
 
 		private void changePermutsButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			PermutsAddChange((before, after, final) =>
+				{
+					Permuts[permutsListBox.SelectedIndex].Key = before;
+					Permuts[permutsListBox.SelectedIndex].Value = after;
+					Permuts[permutsListBox.SelectedIndex].Final = final;
+					permutsList[permutsListBox.SelectedIndex] = string.Format("{0} ->{1} {2}", before, final ? "." : string.Empty, after);
+				});
 		}
 
 		private void deletePermutsButton_Click(object sender, RoutedEventArgs e)
 		{
-
+			Permuts.RemoveAt(permutsListBox.SelectedIndex);
+			permutsList.RemoveAt(permutsListBox.SelectedIndex);
+			if (permutsList.Count != 0)
+				permutsListBox.SelectedIndex = 0;
 		}
 
 		private void startButton_Click(object sender, RoutedEventArgs e)
@@ -138,13 +189,33 @@ namespace MathLogicWpf
 		private void DoWork()
 		{
 			string result = DirtyWork.DoWork(this, Permuts, DirtyWork.Mode.Simple);
-			//stepsList = new BindingList<DataGridRow>(DataClass.Steps);
 			this.Invoke(() =>
 			{
 				DirtyWork.ShowCustomMessageDialog(this, "Готово!", $"Результат: {result}");
 				alphabetTabItem.IsEnabled = permutsTabItem.IsEnabled = textTabItem.IsEnabled = true;
 				stopButton_Click(this, new RoutedEventArgs());
 			});
+		}
+
+		private void MetroWindow_Closing(object sender, CancelEventArgs e)
+		{
+			Owner.Show();
+		}
+
+		private void alphabetListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			alphabetTextBox.Text = alphabetListBox.SelectedValue?.ToString();
+		}
+
+		private void permutsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			int index = permutsListBox.SelectedIndex;
+			if (index != -1)
+			{
+				beforePermutsTextBox.Text = Permuts[index].Key;
+				afterPermutsTextBox.Text = Permuts[index].Value;
+				finalCheckBox.IsChecked = Permuts[index].Final;
+			}
 		}
 	}
 }

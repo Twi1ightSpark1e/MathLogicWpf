@@ -84,14 +84,7 @@ namespace MathLogicWpf
 
 		private void MetroWindow_Closed(object sender, EventArgs e)
 		{
-			stepsList.Clear();
 			Owner.Show();
-		}
-
-		private void backButton_Click(object sender, RoutedEventArgs e)
-		{
-			base.OnClosed(e);
-			Close();
 		}
 
 		private async void addAlphabetButton_Click(object sender, RoutedEventArgs e)
@@ -164,7 +157,7 @@ namespace MathLogicWpf
 			if (!DirtyWork.CheckByAlphabet(this, Alphabet, Permuts, inputTextBox.Text))
 				return;
 			addAlphabetButton.IsEnabled = addPermutsButton.IsEnabled = alphabetListBox.IsEnabled =
-				permutsListBox.IsEnabled = backButton.IsEnabled = inputTextBox.IsEnabled = false;
+				permutsListBox.IsEnabled = inputTextBox.IsEnabled = false;
 			startButton.Content = "Стоп";
 			startButton.Click -= startButton_Click;
 			startButton.Click += stopButton_Click;
@@ -191,7 +184,7 @@ namespace MathLogicWpf
 			{
 				DirtyWork.ShowCustomMessageDialog(this, "Готово!", $"Результат: {result}");
 				addAlphabetButton.IsEnabled = addPermutsButton.IsEnabled = alphabetListBox.IsEnabled =
-					permutsListBox.IsEnabled = backButton.IsEnabled = inputTextBox.IsEnabled = true;
+					permutsListBox.IsEnabled = inputTextBox.IsEnabled = true;
 				deleteAlphabetButton.SetBinding(Button.IsEnabledProperty, new Binding("AlphabetSelected") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 				deletePermutsButton.SetBinding (Button.IsEnabledProperty, new Binding("PermutsSelected") { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 				stopButton_Click(this, new RoutedEventArgs());

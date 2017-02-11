@@ -78,6 +78,9 @@
     <Compile Include="CustomMessageDialog.xaml.cs">
       <DependentUpon>CustomMessageDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainFrame.xaml.cs">
+      <DependentUpon>MainFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StepsWindow.xaml.cs">
       <DependentUpon>StepsWindow.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExpertWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainFrame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

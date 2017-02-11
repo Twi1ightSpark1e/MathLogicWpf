@@ -128,6 +128,8 @@ namespace MathLogicWpf
 
         public static string DoWork(MetroWindow owner, List<Triple<string, string, bool>> permuts, Mode mode)
         {
+			if (permuts.Count == 0)
+				return DataClass.InputText;
             int step = 1;
             Stop = false;
             string text = DataClass.InputText;

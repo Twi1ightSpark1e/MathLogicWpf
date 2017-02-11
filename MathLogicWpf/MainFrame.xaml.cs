@@ -12,26 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 
 namespace MathLogicWpf
 {
 	/// <summary>
-	/// Логика взаимодействия для MainWindow.xaml
+	/// Логика взаимодействия для MainFrame.xaml
 	/// </summary>
-	public partial class MainWindow : MetroWindow
+	public partial class MainFrame : UserControl
 	{
-		public static MetroWindow LastInstance { get; private set; }
-
-		public MainWindow()
+		public MainFrame()
 		{
 			InitializeComponent();
-			LastInstance = this;
 		}
 
-		private void MetroWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		private void StepByStepTile_Click(object sender, RoutedEventArgs e)
 		{
-			transitioning.Content = bool.Parse(e.NewValue.ToString()) ? new MainFrame() : null;
+			MainWindow.LastInstance.Hide();
+			new StepsWindow().ShowDialog();
+		}
+
+		private void ExpertTile_Click(object sender, RoutedEventArgs e)
+		{
+			MainWindow.LastInstance.Hide();
+			new ExpertWindow().ShowDialog();
 		}
 	}
 }

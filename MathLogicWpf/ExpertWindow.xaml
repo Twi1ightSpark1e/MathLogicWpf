@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Экспертный режим" Height="609.649" Width="436.842"
         GlowBrush="{DynamicResource AccentColorBrush}" ResizeMode="CanMinimize"
-        Closed="MetroWindow_Closed" Closing="MetroWindow_Closing" WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow" ShowCloseButton="False">
+        Closed="MetroWindow_Closed" Closing="MetroWindow_Closing" WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow">
     <Grid>
         <Label Content="Алфавит" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="52,11,0,0"/>
         <ListBox Name="alphabetListBox" ItemsSource="{Binding Path=alphabetList, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="115" VerticalAlignment="Top" Width="150" Margin="10,41,0,0" BorderBrush="#33000000" BorderThickness="1" MouseDoubleClick="alphabetListBox_MouseDoubleClick"/>
@@ -28,7 +28,6 @@
                 <DataGridTextColumn Binding="{Binding After}" ClipboardContentBinding="{x:Null}" Header="Стало" Width="170" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name="backButton" Content="Вернуться" HorizontalAlignment="Left" Margin="185,10,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource AccentedSquareButtonStyle}" Controls:ControlsHelper.ContentCharacterCasing="Normal" BorderBrush="#00000000" Click="backButton_Click"/>
 
     </Grid>
 </Controls:MetroWindow>
